@@ -1,0 +1,22 @@
+{
+  "name": "@endereco/prephonecheck",
+  "version": "1.0.0",
+  "description": "",
+  "main": "PrephoneCheck.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Endereco/PrephoneCheck.git"
+  },
+  "keywords": [
+    "endereco"
+  ],
+  "author": "ilja_weber <ilja@endereco.de>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Endereco/PrephoneCheck/issues"
+  },
+  "homepage": "https://github.com/Endereco/PrephoneCheck#readme"
+}
