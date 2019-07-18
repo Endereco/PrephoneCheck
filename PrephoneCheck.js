@@ -8,6 +8,18 @@
 function PrephoneCheck(config) {
     var $self  = this;
 
+    /**
+     * Combine object, IE 11 compatible.
+     */
+    this.mergeObjects = function(objects) {
+        return objects.reduce(function (r, o) {
+            Object.keys(o).forEach(function (k) {
+                r[k] = o[k];
+            });
+            return r;
+        }, {})
+    };
+
     // Includes polyfill for IE
     if (!Array.prototype.includes) {
         Object.defineProperty(Array.prototype, "includes", {
@@ -36,7 +48,7 @@ function PrephoneCheck(config) {
     };
     this.fieldsAreSet = false;
     this.dirty = false;
-    this.config = Object.assign(this.defaultConfig, config);
+    this.config = $self.mergeObjects([this.defaultConfig, config]);
     this.format = config.format;
     this.connector = new XMLHttpRequest();
 
@@ -155,7 +167,7 @@ function PrephoneCheck(config) {
      * @param newConfig
      */
     this.updateConfig = function(newConfig) {
-        $self.config = Object.assign($self.config, newConfig);
+        $self.config = $self.mergeObjects([$self.config, newConfig]);
     };
 
     /**
