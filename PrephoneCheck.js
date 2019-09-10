@@ -44,6 +44,7 @@ function PrephoneCheck(config) {
     }
     this.defaultConfig = {
         'useWatcher': true,
+        'referer': 'not_set',
         'tid': 'not_set'
     };
     this.fieldsAreSet = false;
@@ -93,6 +94,16 @@ function PrephoneCheck(config) {
                 } else {
                     event = $self.createEvent('endereco.clean');
                     $self.inputElement.dispatchEvent(event);
+                }
+
+                if ($data.cmd && $data.cmd.use_tid) {
+                    $self.config.tid = $data.cmd.use_tid;
+
+                    if ($self.config.serviceGroup && 0 < $self.config.serviceGroup.length) {
+                        $self.config.serviceGroup.forEach( function(serviceObject) {
+                            serviceObject.updateConfig({'tid': $data.cmd.use_tid});
+                        })
+                    }
                 }
             });
 
