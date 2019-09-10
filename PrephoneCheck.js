@@ -62,11 +62,6 @@ function PrephoneCheck(config) {
             return;
         }
 
-        // Generate TID if accounting service is set.
-        if (window.accounting && ('not_set' === $self.config.tid)) {
-            $self.config.tid = window.accounting.generateTID();
-        }
-
         // Disable browser autocomplete
         if ($self.isChrome()) {
             $self.inputElement.setAttribute('autocomplete', 'autocomplete_' + Math.random().toString(36).substring(2) + Date.now());
@@ -143,13 +138,21 @@ function PrephoneCheck(config) {
                 }
             };
 
+            /**
+             * Backward compatibility for referer
+             * If not set, it will use the browser url.
+             */
+            if ('not_set' === $self.config.referer) {
+                $self.config.referer = window.location.href;
+            }
+
             $self.requestBody.params.prephoneNumber = $self.inputElement.value.trim();
             $self.requestBody.params.format = $self.format;
             $self.connector.open('POST', $self.config.endpoint, true);
             $self.connector.setRequestHeader("Content-type", "application/json");
             $self.connector.setRequestHeader("X-Auth-Key", $self.config.apiKey);
             $self.connector.setRequestHeader("X-Transaction-Id", $self.config.tid);
-            $self.connector.setRequestHeader("X-Transaction-Referer", window.location.href);
+            $self.connector.setRequestHeader("X-Transaction-Referer", $self.config.referer);
 
             $self.connector.send(JSON.stringify($self.requestBody));
         });
